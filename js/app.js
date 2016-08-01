@@ -12,20 +12,15 @@ $(document).ready(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
-  	$(".new").click(function() {
-  		newGame();
-  	});
+  	$(".new").click(newGame);
 
-  	$('#guessButton').click(function() {
-  		validateGuess();
-  	});
+  	$('#guessButton').click(validateGuess);
 
   	newGame();
 });
 
 var numOfGuesses = 0;
 var randomNumber = 0;
-var userNumber = 0;
 
 function newGame() {
 	randomNumber = luckyNumber(1, 100);
@@ -33,46 +28,53 @@ function newGame() {
 	$('#userGuess').val("");
 }
 
+function receiveGuess() {
+
+}
+
 function validateGuess() {
 	var userGuessInput = $('#userGuess').val();
-	userNumber = parseInt(userGuessInput);
+	var userNumber = parseInt(userGuessInput);
 	if (isNaN(userNumber)) {
 		alert('I need a number, genius.');
 		return null;
 	}
-	else if (userNumber < 0 || userNumber > 101) {
+	else if (userNumber < 0 || userNumber > 100) {
 		alert('You need to choose a number between 1 and 100.');
 		return null;
 	}
 	else {
-		feedback();
+		feedback(userNumber);
 	}
-	return userNumber;
 }
 
-function feedback() {
+function feedback(userNumber) {
 	var guessMargin = Math.abs(randomNumber - userNumber);
 	if (userNumber === randomNumber) {
-		$('#feedback').html("You win! Click new game to play agan.");
+		$('#feedback').text("You win! Click new game to play agan.");
 	}
 	else if (guessMargin < 10) {
-		$('#feedback').html("Gettin super hot...");
+		$('#feedback').text("Gettin super hot...");
 	}
 	else if (guessMargin < 20) {
-		$('#feedback').html("Gettin hot...");
+		$('#feedback').text("Gettin hot...");
 	}
 	else if (guessMargin < 30) {
-		$('#feedback').html("Gettin warm...");
+		$('#feedback').text("Gettin warm...");
 	}
 	else {
-		$('#feedback').html("Stone cold...");
+		$('#feedback').text("Stone cold...");
 	}
 }
 
 function guessTracker () {
+	var guessNumberPlacement = $('ul#guessList');
+
 	var guessNumber = $('<li>');
 	guessNumber.attr("id", "guesses[" + numOfGuesses++ +"]");
 	guessNumber.html(" + userNumber + ");
+
+	$('#guessList').prepend(guessNumber);
 
 }
 
