@@ -33,19 +33,23 @@ function receiveGuess() {
 }
 
 function validateGuess() {
-	var userGuessInput = $('#userGuess').val();
-	var userNumber = parseInt(userGuessInput);
-	if (isNaN(userNumber)) {
-		alert('I need a number, genius.');
-		return null;
-	}
-	else if (userNumber < 0 || userNumber > 100) {
-		alert('You need to choose a number between 1 and 100.');
-		return null;
-	}
-	else {
-		feedback(userNumber);
-	}
+
+	$('form').submit(function(event) {
+  			event.preventDefault();
+  	});
+		var userGuessInput = $('#userGuess').val();
+		var userNumber = parseInt(userGuessInput);
+		if (isNaN(userNumber)) {
+			alert('I need a number, genius.');
+			return null;
+		}
+		else if (userNumber < 0 || userNumber > 100) {
+			alert('You need to choose a number between 1 and 100.');
+			return null;
+		}
+		else {
+			feedback(userNumber);
+		}
 }
 
 function feedback(userNumber) {
@@ -65,17 +69,21 @@ function feedback(userNumber) {
 	else {
 		$('#feedback').text("Stone cold...");
 	}
+	guessTracker();
 }
 
-function guessTracker () {
+function guessTracker() {
+	var count = numOfGuesses;
 	var guessNumberPlacement = $('ul#guessList');
 
 	var guessNumber = $('<li>');
 	guessNumber.attr("id", "guesses[" + numOfGuesses++ +"]");
-	guessNumber.html(" + userNumber + ");
+	guessNumber.html(' + userNumber + ');
 
 	$('#guessList').prepend(guessNumber);
 
+	count++;
+	$('span#count').html(count);
 }
 
 function luckyNumber(min, max) {
