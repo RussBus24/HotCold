@@ -26,10 +26,9 @@ function newGame() {
 	randomNumber = luckyNumber(1, 100);
 	numOfGuesses = 0;
 	$('#userGuess').val("");
-}
-
-function receiveGuess() {
-
+	$('#feedback').text("Make your Guess!");
+	$('#guessList').empty();
+	$('span#count').text(0);
 }
 
 function validateGuess() {
@@ -50,6 +49,7 @@ function validateGuess() {
 		else {
 			feedback(userNumber);
 		}
+		$('#userGuess').val("");
 }
 
 function feedback(userNumber) {
@@ -69,16 +69,16 @@ function feedback(userNumber) {
 	else {
 		$('#feedback').text("Stone cold...");
 	}
-	guessTracker();
+	guessTracker(userNumber);
 }
 
-function guessTracker() {
+function guessTracker(userNumber) {
 	var count = numOfGuesses;
 	var guessNumberPlacement = $('ul#guessList');
 
 	var guessNumber = $('<li>');
 	guessNumber.attr("id", "guesses[" + numOfGuesses++ +"]");
-	guessNumber.html(' + userNumber + ');
+	guessNumber.html(userNumber);
 
 	$('#guessList').prepend(guessNumber);
 
@@ -91,4 +91,4 @@ function luckyNumber(min, max) {
 	 return Math.floor(Math.random() * max) + min;
 }
 
-console.log(luckyNumber(1,100));
+console.log(randomNumber);
